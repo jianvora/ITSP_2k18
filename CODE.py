@@ -1,3 +1,9 @@
+"""ITSP_2k18
+   Team Shikari-ID 2
+   Self-aiming gun
+   Contibutors-Jian,Rishabh,Dhruv,Siddhant"""
+
+
 try:
     import cv2
 except Exception as e:
