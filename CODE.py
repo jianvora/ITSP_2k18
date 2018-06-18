@@ -7,7 +7,7 @@
 try:
     import cv2
 except Exception as e:
-    print("Warning: OpenCV not installed. To use motion detection, make sure you've properly configured OpenCV.")
+    print("\nWARNING:OPENCV NOT INSTALLED.TO TEST MOTION DETECTION MAKE SURE YOU HAVE OPENCV CONFIGURED.")
 
 import time
 import thread
@@ -414,18 +414,18 @@ class VideoUtils(object):
 if __name__ == "__main__":
     t = Turret(friendly_mode=False)
 
-    user_input = raw_input("Choose an input mode: (1) Motion Detection, (2) Interactive\n")
+    user_input = raw_input("\nCHOOSE AN INPUT MODE: \n(1) MOTION DETECTION \n(2) INTERACTIVE\n")
 
     if user_input == "1":
         t.calibrate()
-        if raw_input("Live video? (y, n)\n").lower() == "y":
+        if raw_input("Live Video? (y, n)\n").lower() == "y":
             t.motion_detection(show_video=True)
         else:
             t.motion_detection()
     elif user_input == "2":
-        if raw_input("Live video? (y, n)\n").lower() == "y":
+        if raw_input("Live Video? (y, n)\n").lower() == "y":
             thread.start_new_thread(VideoUtils.live_video, ())
         t.interactive()
     else:
-        print "Unknown input mode. Please choose a number (1) or (2)"
+        print "\nUNKNOWN INPUT MODE.PLEASE CHOOSE 1 OR 2."
 
