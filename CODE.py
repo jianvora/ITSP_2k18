@@ -58,11 +58,7 @@ class VideoUtils(object):
     """
     @staticmethod
     def live_video(camera_port=0):
-        """
-        Opens a window with live video.
-        :param camera:
-        :return:
-        """
+       
 
         video_capture = cv2.VideoCapture(camera_port)
 
@@ -70,13 +66,11 @@ class VideoUtils(object):
             # Capture frame-by-frame
             ret, frame = video_capture.read()
 
-            # Display the resulting frame
             cv2.imshow('Video', frame)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
-        # When everything is done, release the capture
         video_capture.release()
         cv2.destroyAllWindows()
 
@@ -93,13 +87,11 @@ class VideoUtils(object):
 
         # loop over the frames of the video
         while True:
-            # grab the current frame and initialize the occupied/unoccupied
-            # text
+        
 
             (grabbed, frame) = camera.read()
 
-            # if the frame could not be grabbed, then we have reached the end
-            # of the video
+        
             if not grabbed:
                 break
 
@@ -134,8 +126,6 @@ class VideoUtils(object):
             frameDelta = cv2.absdiff(firstFrame, gray)
             thresh = cv2.threshold(frameDelta, 25, 255, cv2.THRESH_BINARY)[1]
 
-            # dilate the thresholded image to fill in holes, then find contours
-            # on thresholded image
             thresh = cv2.dilate(thresh, None, iterations=2)
             c = VideoUtils.get_best_contour(thresh.copy(), 5000)
 
@@ -146,16 +136,13 @@ class VideoUtils(object):
                 cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 callback(c, frame)
 
-            # show the frame and record if the user presses a key
             if show_video:
                 cv2.imshow("SECURITY FEED", frame)
                 key = cv2.waitKey(1) & 0xFF
 
-                # if the `q` key is pressed, break from the lop
                 if key == ord("q"):
                     break
 
-        # cleanup the camera and close any open windows
         camera.release()
         cv2.destroyAllWindows()
 
@@ -197,10 +184,7 @@ class VideoUtils(object):
         GPIO.output(RELAY_PIN, GPIO.LOW)
 
     def calibrate(self):
-        """
-        Waits for input to calibrate the turret's axis
-        :return:
-        """
+        
         print "PLEASE CALIBRATE THE TILT OF THE GUN SO THAT IT IS LEVEL.\n COMMANDS:\n (w) MOVES UP\n (s) MOVES DOWN\n PRESS (ENTER) TO FINISH.\n"
               
         self.__calibrate_y_axis()
@@ -212,10 +196,7 @@ class VideoUtils(object):
         print "CALIBRATION FINISHED."
 
     def __calibrate_x_axis(self):
-        """
-        Waits for input to calibrate the x axis
-        :return:
-        """
+        
         with raw_mode(sys.stdin):
             try:
                 while True:
@@ -241,10 +222,7 @@ class VideoUtils(object):
                 sys.exit(1)
 
     def __calibrate_y_axis(self):
-        """
-        Waits for input to calibrate the y axis.
-        :return:
-        """
+        
         with raw_mode(sys.stdin):
             try:
                 while True:
@@ -270,10 +248,7 @@ class VideoUtils(object):
                 sys.exit(1)
 
     def motion_detection(self, show_video=False):
-        """
-        Uses the camera to move the turret. OpenCV ust be configured to use this.
-        :return:
-        """
+     
         VideoUtils.find_motion(self.__move_axis, show_video=show_video)
 
     def __move_axis(self, contour, frame):
@@ -333,10 +308,7 @@ class VideoUtils(object):
         t_fire.join()
 
     def interactive(self):
-        """
-        Starts an interactive session. Key presses determine movement.
-        :return:
-        """
+        
 
         Turret.move_forward(self.sm_x, 1)
         Turret.move_forward(self.sm_y, 1)
